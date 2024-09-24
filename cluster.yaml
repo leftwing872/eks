@@ -1,0 +1,47 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: eks-class09
+  region: us-east-1
+  version: "1.30"
+  tags:
+    karpenter.sh/discovery: eks-class09
+    created-by: eks-class09
+    env: eks-class09
+iam:
+  withOIDC: true
+vpc:
+  id: vpc-0a300800b4114430c
+  subnets:
+    public:
+      PublicSubnet01:
+        id: subnet-004d1b133bd6275e3
+      PublicSubnet02:
+        id: subnet-06ee3f1bdbcd9bd80
+      PublicSubnet03:
+        id: subnet-08b8e48670fba5460
+    private:
+      PrivateSubnet01:
+        id: subnet-032a3d6c6aee82de5
+      PrivateSubnet02:
+        id: subnet-00b2b7f0868342bf4
+      PrivateSubnet03:
+        id: subnet-01268e9d25c92311a
+addons:
+  - name: vpc-cni
+    version: 1.16.0
+    configurationValues: '{"env":{"ENABLE_PREFIX_DELEGATION":"true", "ENABLE_POD_ENI":"true", "POD_SECURITY_GROUP_ENFORCING_MODE":"standard"},"enableNetworkPolicy": "true"}'
+    resolveConflicts: overwrite
+managedNodeGroups:
+  - name: default
+    desiredCapacity: 2
+    minSize: 2
+    maxSize: 6
+    instanceType: t3.medium
+    privateNetworking: true
+    releaseVersion: "1.30.0-20240625"
+    updateConfig:
+      maxUnavailablePercentage: 50
+    labels:
+      workshop-default: "yes"
+

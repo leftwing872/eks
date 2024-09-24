@@ -1,0 +1,4 @@
+#Create EKS Cluster
+eksctl create cluster --config-file=/Users/eunhak/ws/200-Amazon-EKS/00class/cluster.yaml
+
+curl -fsSL https://raw.githubusercontent.com/aws-samples/eks-workshop-v2/stable/cluster/eksctl/cluster.yaml 
